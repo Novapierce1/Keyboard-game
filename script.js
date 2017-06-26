@@ -4,6 +4,13 @@ $(document).ready(function() {
     var jibberish = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
     var sentence = '';
     var index = 0;
+    $('#target-letter').text(sentence);
+    function codein() {
+        sentence += jibberish[index];
+        if (index == jibberish.length) {
+        
+    }
+}
 
     $("#keyboard-upper-container").css({"display":"none"})
     $("#sentence").text(jibberish[0])
@@ -13,7 +20,6 @@ $(document).keydown(function(event) {
     if (event.which == 16) { 
         $("#keyboard-lower-container").css({"display":"none"});
         $("#keyboard-upper-container").css({"display":"block"});
-        console.log(event.which)
     }
 });
 //Shift Key up  
@@ -238,10 +244,30 @@ $(document).keyup(function() {
     $("#32").css("background-color", "");
 
 });
-$(document).kepress(function(event) {
-    if (event.which = "#sentence"){
-        
+//Feedback
+$(document).on( 'keypress',function(e) {
+    var res = String.fromCharCode(e.which);
+    $("#feedback").text(res);
+    var test = "a";
+    if (res == test) {
+        $('#yellow-block').animate({'margin-left':'+=1em'}, 10)
+        $("#feedback").append('<span class = "glyphicon glyphicon-ok"></span>');
+    } else if (res!==test) {
+        var divClone = $("#yellow-block").clone();
+        $("#yellow-block").replaceWith(divClone.clone()); 
+        $("#yellow-block").replaceWith(divClone); 
+        $("#feedback").append('<span class = "glyphicon glyphicon-remove"></span>');
     }
-})
+});    
+
+
 
     
+
+//var jibberish = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+//
+// if (){
+// 
+// } else {
+//  
+// 
