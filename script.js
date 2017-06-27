@@ -1,15 +1,18 @@
-var jibberish = ['ten ate neite ate nee enet ite ate inet ent eate', 
-'Too ato too nOt enot one totA not anot tOO aNot', 
-'oat itain oat tain nate eate tea anne inant nean', 
-'itant eate anot eat nato inate eat anot tain eat',
-'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+var jibberish = [
+    'ten ate neite ate nee enet ite ate inet ent eate', 
+    'Too ato too nOt enot one totA not anot tOO aNot', 
+    'oat itain oat tain nate eate tea anne inant nean', 
+    'itant eate anot eat nato inate eat anot tain eat',
+    'nee ene ate ite tent tiet ent ine ene ete ene ate'
+];
 var sentence = '';
 var index = 0;
 var sentencecounter = 0;
+
 $(document).ready(function() {
-    $("#keyboard-upper-container").css({"display":"none"})
+    $("#keyboard-upper-container").hide();
     $("#sentence").text(jibberish[sentencecounter])
-    $("#target-letter").text(jibberish[sentencecounter].charAt(index))
+    $("#target-letter").text(jibberish[sentencecounter].charAt(index));
 });
 //shift key up
 $(document).keydown(function(event) {
@@ -239,37 +242,32 @@ $(document).keyup(function() {
     $("#32").css("background-color", "");
 
 });
-//Feedback and Target letter
-$(document).on( 'keypress',function(e) {
-    var target = jibberish[sentencecounter].charAt(index+1);
-    var end = jibberish[sentencecounter].charAt(jibberish[sentencecounter].length-1);
+  
+$(document).on('keypress', function(e) {
+    var feedbackDiv = $('#feedback'),
+        targetDiv = $('#target-letter'),
+        sentenceDiv = $('#sentence'),
+        yellowBlock = $('#yellow-block');
+
+    var target = jibberish[sentencecounter].charAt(index);
+    var end = jibberish[sentencecounter].length;
     var res = String.fromCharCode(e.which);
-    $("#feedback").text(res);
-    $("#target-letter").text(target); 
-    console.log(end);
+
     if (res === target) {
-        index++;
-        $("#yellow-block").animate({'margin-left':'+=17px'}, 10);
-        $("#feedback").append('<span class = "glyphicon glyphicon-ok"></span>');
-    } else if (res!== target && res!== end) {
-        $("#feedback").append('<span class = "glyphicon glyphicon-remove"></span>');
-    } else if (res == end) {
-        index = 0
-        sentencecounter++;
-        $("#feedback").append('<span class = "glyphicon glyphicon-ok"></span>');
-        $("#yellow-block").css('margin-left:0px')
-        $("#sentence").text(jibberish[sentencecounter++])
-    }
+        yellowBlock.animate({'margin-left':'+=17px'}, 10);
+        feedbackDiv.empty();
+        feedbackDiv.append('<span class = "glyphicon glyphicon-ok"></span>');
+        targetDiv.text(jibberish[sentencecounter].charAt(++index));
+
+        if (index >= end) {
+            console.log('im done with this sentence');
+            index = 0; 
+            feedbackDiv.empty();
+            yellowBlock.animate({'margin-left': '-0.5em'}, 300);
+            sentenceDiv.text(jibberish[++sentencecounter]);
+        }
+    } else {
+        feedbackDiv.empty();
+        feedbackDiv.append('<span class = "glyphicon glyphicon-remove"></span>');
+    } 
 });    
-
-
-
-    
-
-//var jibberish = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
-//
-// if (){
-// 
-// } else {
-//  
-// 
